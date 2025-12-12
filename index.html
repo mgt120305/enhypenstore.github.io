@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENHYPEN Store - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #16213e 25%, #1a1a2e 50%, #0f3460 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        .auth-container {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 50px;
+            width: 450px;
+            max-width: 90%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.6)); }
+        }
+
+        .logo p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .server-status {
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .server-status.connected {
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid rgba(78, 205, 196, 0.5);
+            color: #4ecdc4;
+        }
+
+        .server-status.disconnected {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid rgba(255, 107, 107, 0.5);
+            color: #ff6b6b;
+        }
+
+        .form-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4ecdc4;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            transition: left 0.3s ease;
+            z-index: 1;
+        }
+
+        .submit-btn:hover::before {
+            left: 0;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .submit-btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .dashboard {
+            display: none;
+            width: 900px;
+            max-width: 95%;
+        }
+
+        .dashboard.active {
+            display: block;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .dashboard-header {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info h2 {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            opacity: 0.7;
+        }
+
+        .logout-btn {
+            padding: 12px 25px;
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid #ff6b6b;
+            border-radius: 15px;
+            color: #ff6b6b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 107, 107, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .dashboard-card h3 {
+            color: #4ecdc4;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+
+        .purchase-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .purchase-emoji {
+            font-size: 2rem;
+        }
+
+        .purchase-info {
+            flex: 1;
+        }
+
+        .purchase-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .purchase-details {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .purchase-price {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.5;
+        }
+
+        .go-shop-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .go-shop-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+            display: none;
+        }
+
+        .notification.error {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div id="notification" class="notification"></div>
+
+    <div class="auth-container" id="authContainer">
+        <div class="logo">
+            <h1>ENHYPEN</h1>
+            <p>Official Store - Sistema de Clientes</p>
+        </div>
+
+        <div class="server-status disconnected" id="serverStatus">
+            🔴 Verificando conexión con el servidor...
+        </div>
+
+        <div class="form-tabs">
+            <button class="tab-btn active" onclick="switchTab('login')">Iniciar Sesión</button>
+            <button class="tab-btn" onclick="switchTab('register')">Registrarse</button>
+        </div>
+
+        <div class="form-content active" id="loginForm">
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>📧 Correo Electrónico</label>
+                    <input type="email" id="loginEmail" placeholder="tu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>🔒 Contraseña</label>
+                    <input type="password" id="loginPassword" placeholder="Tu contraseña" required>
+                </div>
+                <button type="submit" class="submit-btn" id="loginBtn">
+                    <span>Iniciar Sesión</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="form-content" id="registerForm">
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>👤 Nombre Completo</label>
+                    <input type="text" id="registerName" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>📧 Correo Electrónico</label>
+                    <input type="email" id="registerEmail" placeholder="tu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>🔒 Contraseña</label>
+                    <input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres" required minlength="6">
+                </div>
+                <button type="submit" class="submit-btn" id="registerBtn">
+                    <span>Crear Cuenta</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <div class="user-info">
+                <h2 id="userName">👋 Bienvenido</h2>
+                <p id="userEmail">email@example.com</p>
+            </div>
+            <button class="logout-btn" onclick="logout()">🚪 Cerrar Sesión</button>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="dashboard-card">
+                <h3>📊 Estadísticas</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Total de Compras</span>
+                    <span class="stat-value" id="totalPurchases">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Productos Comprados</span>
+                    <span class="stat-value" id="totalItems">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Gastado</span>
+                    <span class="stat-value" id="totalSpent">$0.00</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Miembro desde</span>
+                    <span class="stat-value" id="memberSince">Hoy</span>
+                </div>
+                <button class="go-shop-btn" onclick="goToShop()">
+                    🛒 Ir a la Tienda
+                </button>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>🛍️ Historial de Compras</h3>
+                <div id="purchaseHistory">
+                    <div class="no-data">
+                        <p>📦 Cargando historial...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:4444/api';
+let authToken = null;
+let currentUser = null;
+
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const numberOfParticles = 30;
+
+    for (let i = 0; i < numberOfParticles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+        particlesContainer.appendChild(particle);
+    }
+}
+
+async function checkServerConnection() {
+    try {
+        const response = await fetch('http://localhost:4444/');
+        if (response.ok) {
+            updateServerStatus(true);
+            return true;
+        }
+    } catch (error) {
+        updateServerStatus(false);
+        return false;
+    }
+}
+
+function updateServerStatus(connected) {
+    const statusElement = document.getElementById('serverStatus');
+    if (connected) {
+        statusElement.className = 'server-status connected';
+        statusElement.textContent = '✅ Conectado al servidor';
+    } else {
+        statusElement.className = 'server-status disconnected';
+        statusElement.textContent = '🔴 Servidor desconectado - Inicia el servidor Node.js';
+    }
+}
+
+function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.form-content').forEach(form => form.classList.remove('active'));
+
+    if (tab === 'login') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('loginForm').classList.add('active');
+    } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('registerForm').classList.add('active');
+    }
+}
+
+async function handleLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const btn = document.getElementById('loginBtn');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span><div class="loading"></div> Iniciando sesión...</span>';
+
+    try {
+        const response = await fetch(`${API_URL}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            authToken = data.token;
+            currentUser = data.user;
+            
+            // Guardar en localStorage para persistencia
+            localStorage.setItem('enhypen_token', data.token);
+            localStorage.setItem('enhypen_user', JSON.stringify(data.user));
+            
+            await loadDashboard();
+            showNotification(`¡Bienvenido de nuevo, ${data.user.name}! 🎉`, 'success');
+        } else {
+            showNotification(data.error || 'Error al iniciar sesión', 'error');
+        }
+    } catch (error) {
+        showNotification('Error de conexión con el servidor. Verifica que esté ejecutándose.', 'error');
+        console.error('Error:', error);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Iniciar Sesión</span>';
+    }
+}
+
+async function handleRegister(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+    const btn = document.getElementById('registerBtn');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span><div class="loading"></div> Registrando...</span>';
+
+    try {
+        const response = await fetch(`${API_URL}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            authToken = data.token;
+            currentUser = data.user;
+            
+            // Guardar en localStorage para persistencia
+            localStorage.setItem('enhypen_token', data.token);
+            localStorage.setItem('enhypen_user', JSON.stringify(data.user));
+            
+            await loadDashboard();
+            showNotification(`¡Cuenta creada exitosamente! Bienvenido ${name} 🎉`, 'success');
+        } else {
+            showNotification(data.error || 'Error al registrarse', 'error');
+        }
+    } catch (error) {
+        showNotification('Error de conexión con el servidor. Verifica que esté ejecutándose.', 'error');
+        console.error('Error:', error);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Crear Cuenta</span>';
+    }
+}
+
+async function loadDashboard() {
+    document.getElementById('authContainer').style.display = 'none';
+    document.getElementById('dashboard').classList.add('active');
+
+    document.getElementById('userName').textContent = `👋 Hola, ${currentUser.name}`;
+    document.getElementById('userEmail').textContent = currentUser.email;
+
+    await loadUserStats();
+    await loadPurchaseHistory();
+}
+
+async function loadUserStats() {
+    try {
+        const response = await fetch(`${API_URL}/user/stats`, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+
+        if (response.ok) {
+            const stats = await response.json();
+            
+            document.getElementById('totalPurchases').textContent = stats.totalPurchases;
+            document.getElementById('totalItems').textContent = stats.totalItems;
+            document.getElementById('totalSpent').textContent = `${stats.totalSpent.toFixed(2)}`;
+            document.getElementById('memberSince').textContent = formatDate(stats.memberSince);
+        }
+    } catch (error) {
+        console.error('Error cargando estadísticas:', error);
+    }
+}
+
+async function loadPurchaseHistory() {
+    try {
+        const response = await fetch(`${API_URL}/user/purchases`, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+
+        if (response.ok) {
+            const purchases = await response.json();
+            displayPurchaseHistory(purchases);
+        }
+    } catch (error) {
+        console.error('Error cargando historial:', error);
+    }
+}
+
+function displayPurchaseHistory(purchases) {
+    const historyContainer = document.getElementById('purchaseHistory');
+    
+    if (purchases.length === 0) {
+        historyContainer.innerHTML = `
+            <div class="no-data">
+                <p>📦 Aún no has realizado ninguna compra</p>
+            </div>
+        `;
+        return;
+    }
+
+    historyContainer.innerHTML = purchases.map(purchase => 
+        purchase.items.map(item => `
+            <div class="purchase-item">
+                <div class="purchase-emoji">${item.emoji}</div>
+                <div class="purchase-info">
+                    <div class="purchase-name">${item.productName}</div>
+                    <div class="purchase-details">
+                        ${formatDate(purchase.purchaseDate)} • Cantidad: ${item.quantity}
+                    </div>
+                </div>
+                <div class="purchase-price">${item.subtotal.toFixed(2)}</div>
+            </div>
+        `).join('')
+    ).join('');
+}
+
+function logout() {
+    authToken = null;
+    currentUser = null;
+    
+    // Limpiar localStorage al cerrar sesión
+    localStorage.removeItem('enhypen_token');
+    localStorage.removeItem('enhypen_user');
+    
+    document.getElementById('dashboard').classList.remove('active');
+    document.getElementById('authContainer').style.display = 'block';
+    
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('registerName').value = '';
+    document.getElementById('registerEmail').value = '';
+    document.getElementById('registerPassword').value = '';
+    
+    showNotification('👋 Sesión cerrada exitosamente', 'success');
+}
+
+function goToShop() {
+    showNotification('🛒 Redirigiendo a la tienda...', 'success');
+    setTimeout(() => {
+        window.location.href = 'shop2.1.html';
+    }, 1000);
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('es-ES', options);
+}
+
+function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.style.display = 'block';
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease-in forwards';
+        setTimeout(() => {
+            notification.style.display = 'none';
+            notification.style.animation = '';
+        }, 300);
+    }, 3000);
+}
+
+// Función para verificar sesión al cargar la página
+function checkExistingSession() {
+    const savedToken = localStorage.getItem('enhypen_token');
+    const savedUser = localStorage.getItem('enhypen_user');
+    
+    if (savedToken && savedUser) {
+        try {
+            authToken = savedToken;
+            currentUser = JSON.parse(savedUser);
+            
+            // Verificar si el token sigue siendo válido
+            validateToken().then(isValid => {
+                if (isValid) {
+                    loadDashboard();
+                    showNotification(`¡Bienvenido de nuevo, ${currentUser.name}! 👋`, 'success');
+                } else {
+                    // Token inválido, limpiar
+                    localStorage.removeItem('enhypen_token');
+                    localStorage.removeItem('enhypen_user');
+                }
+            });
+        } catch (e) {
+            console.error('Error parsing saved user data:', e);
+            localStorage.removeItem('enhypen_token');
+            localStorage.removeItem('enhypen_user');
+        }
+    }
+}
+
+// Función para validar token
+async function validateToken() {
+    if (!authToken) return false;
+    
+    try {
+        const response = await fetch(`${API_URL}/user/profile`, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+        
+        return response.ok;
+    } catch (error) {
+        console.error('Error validating token:', error);
+        return false;
+    }
+}
+
+window.getAuthToken = function() {
+    return authToken;
+};
+
+window.getCurrentUser = function() {
+    return currentUser;
+};
+
+window.isLoggedIn = function() {
+    return authToken !== null;
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    checkServerConnection();
+    checkExistingSession(); // Verificar sesión existente al cargar
+    
+    setInterval(checkServerConnection, 5000);
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,1095 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENHYPEN Official Store</title>
+    <link rel="stylesheet" href="shop.css">
+</head>
+<body>
+    <div class="animated-bg">
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo" onclick="goHome()">ENHYPEN STORE</div>
+            <div class="nav-center">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Buscar productos..." 
+                           onkeyup="searchProducts(this.value)" id="searchInput">
+                </div>
+            </div>
+            <div class="nav-right">
+                <span id="userGreeting" style="margin-right: 15px; color: #4ecdc4; font-weight: 600;"></span>
+                <a href="index.html" class="nav-link" id="loginLink">Iniciar Sesión</a>
+                <a href="inicio.html" class="nav-link">Inicio</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Tienda Oficial ENHYPEN</h1>
+            <p>Descubre nuestra colección exclusiva de productos oficiales</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">500+</div>
+                    <div class="hero-stat-label">Productos</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">50K+</div>
+                    <div class="hero-stat-label">Clientes</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">24/7</div>
+                    <div class="hero-stat-label">Soporte</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="main-content">
+        <div class="filters-section">
+            <div class="filters-row">
+                <div class="category-filters">
+                    <button class="filter-btn active" data-category="all" onclick="filterProducts('all')">
+                        Todos los Productos
+                    </button>
+                    <button class="filter-btn" data-category="albums" onclick="filterProducts('albums')">
+                        💿 Álbumes
+                    </button>
+                    <button class="filter-btn" data-category="clothing" onclick="filterProducts('clothing')">
+                        👕 Ropa
+                    </button>
+                    <button class="filter-btn" data-category="accessories" onclick="filterProducts('accessories')">
+                        🎯 Accesorios
+                    </button>
+                    <button class="filter-btn" data-category="collectibles" onclick="filterProducts('collectibles')">
+                        🖼️ Coleccionables
+                    </button>
+                    <button class="filter-btn" data-category="special" onclick="filterProducts('special')">
+                        ⭐ Edición Especial
+                    </button>
+                </div>
+                <div class="sort-controls">
+                    <select class="sort-select" onchange="sortProducts(this.value)">
+                        <option value="default">Ordenar por</option>
+                        <option value="price-low">Precio: Menor a Mayor</option>
+                        <option value="price-high">Precio: Mayor a Menor</option>
+                        <option value="name">Nombre A-Z</option>
+                        <option value="newest">Más Recientes</option>
+                        <option value="popular">Más Popular</option>
+                    </select>
+                    <div class="view-toggle">
+                        <button class="view-btn active" onclick="toggleView('grid')">⊞</button>
+                        <button class="view-btn" onclick="toggleView('list')">☰</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="products-container">
+            <div class="products-header">
+                <div class="products-count" id="productsCount">Mostrando 0 productos</div>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <div class="loading">Cargando productos...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <div class="cart-title">🎒 Mi Maletín</div>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        
+        <div class="cart-content">
+            <div class="cart-summary" id="cartSummary">
+                <h3>💰 Resumen</h3>
+                <div class="cart-summary-line">
+                    <span>Artículos:</span>
+                    <span id="itemCount">0</span>
+                </div>
+                <div class="cart-summary-line">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="cart-summary-line">
+                    <span>Envío:</span>
+                    <span id="shipping">Gratis</span>
+                </div>
+                <div class="cart-summary-line">
+                    <span>Impuestos:</span>
+                    <span id="taxes">$0.00</span>
+                </div>
+                <div class="cart-summary-line total">
+                    <span>Total:</span>
+                    <span id="totalAmount">$0.00</span>
+                </div>
+                <button class="checkout-btn" onclick="checkout()">
+                    <span>💳 Proceder al Pago</span>
+                </button>
+            </div>
+            
+            <div class="inventory-container">
+                <div class="inventory-title">📦 Inventario del Maletín</div>
+                <div class="inventory-grid" id="inventoryGrid">
+                    <div class="empty-inventory">
+                        <div class="empty-inventory-icon">🎒</div>
+                        <p>Arrastra productos aquí</p>
+                        <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 5px;">
+                            Organiza tu inventario como en RE4
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="floating-items" id="floatingItems" style="display: none;">
+                    <h4>⚠️ Artículos sin espacio</h4>
+                    <div class="floating-items-container" id="floatingItemsContainer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:4444/api';
+        let authToken = null;
+        let currentUser = null;
+
+        let cart = [];
+        let products = [];
+        let filteredProducts = [];
+        let isCartOpen = false;
+        let currentView = 'grid';
+        let wishlist = [];
+        let draggedItem = null;
+        let inventoryGrid = Array(8).fill().map(() => Array(6).fill(null));
+
+        const productData = [
+            {
+                id: 1,
+                name: "DIMENSION: DILEMMA Album",
+                price: 25.99,
+                originalPrice: null,
+                category: "albums",
+                description: "Álbum completo con photobook exclusivo de 100 páginas, photocards limitadas y póster oficial.",
+                emoji: "💿",
+                badge: "Popular",
+                rating: 4.9,
+                reviews: 1250,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 2,
+                name: "MANIFESTO: DAY 1 Album",
+                price: 24.99,
+                originalPrice: null,
+                category: "albums",
+                description: "Último lanzamiento con contenido especial, incluye CD, DVD de making-of y mercancía exclusiva.",
+                emoji: "💿",
+                badge: "Nuevo",
+                rating: 4.8,
+                reviews: 890,
+                isNew: true,
+                onSale: false
+            },
+            {
+                id: 3,
+                name: "Hoodie Oficial ENHYPEN",
+                price: 55.00,
+                originalPrice: 75.00,
+                category: "clothing",
+                description: "Sudadera oficial con capucha, logo bordado de alta calidad, 100% algodón premium.",
+                emoji: "👕",
+                badge: "Oferta",
+                rating: 4.7,
+                reviews: 2100,
+                isNew: false,
+                onSale: true
+            },
+            {
+                id: 4,
+                name: "Camiseta Tour 2024",
+                price: 35.00,
+                originalPrice: null,
+                category: "clothing",
+                description: "Camiseta conmemorativa del tour mundial 2024, diseño exclusivo con fechas del tour.",
+                emoji: "👔",
+                badge: "Exclusivo",
+                rating: 4.6,
+                reviews: 1580,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 5,
+                name: "Lightstick ENHYPEN Official",
+                price: 45.00,
+                originalPrice: null,
+                category: "accessories",
+                description: "Lightstick oficial para conciertos con conexión Bluetooth, múltiples colores y efectos.",
+                emoji: "✨",
+                badge: "Oficial",
+                rating: 4.9,
+                reviews: 3200,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 6,
+                name: "Llavero Set Miembros",
+                price: 18.00,
+                originalPrice: null,
+                category: "accessories",
+                description: "Set completo de 7 llaveros acrílicos con todos los miembros, diseño kawaii.",
+                emoji: "🔑",
+                badge: "Set",
+                rating: 4.5,
+                reviews: 950,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 7,
+                name: "Photocard Set Limitada",
+                price: 22.00,
+                originalPrice: null,
+                category: "collectibles",
+                description: "Colección limitada de 50 photocards holográficas, numeradas y con certificado.",
+                emoji: "📸",
+                badge: "Limitado",
+                rating: 4.8,
+                reviews: 1750,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 8,
+                name: "Poster Oficial A2",
+                price: 15.00,
+                originalPrice: null,
+                category: "collectibles",
+                description: "Poster de alta calidad tamaño A2, impresión profesional en papel premium.",
+                emoji: "🖼️",
+                badge: "HD",
+                rating: 4.4,
+                reviews: 680,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 9,
+                name: "Gorra ENHYPEN Logo",
+                price: 28.00,
+                originalPrice: null,
+                category: "accessories",
+                description: "Gorra ajustable con logo bordado 3D, visera curva, disponible en negro y blanco.",
+                emoji: "🧢",
+                badge: "Clásico",
+                rating: 4.3,
+                reviews: 420,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 10,
+                name: "BORDER: CARNIVAL Album",
+                price: 23.99,
+                originalPrice: null,
+                category: "albums",
+                description: "Álbum debut histórico con packaging especial, incluye todas las pistas icónicas.",
+                emoji: "💿",
+                badge: "Clásico",
+                rating: 4.9,
+                reviews: 2800,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 11,
+                name: "Mochila Tour Oficial",
+                price: 65.00,
+                originalPrice: 85.00,
+                category: "accessories",
+                description: "Mochila resistente al agua con compartimentos acolchados y logo reflectante.",
+                emoji: "🎒",
+                badge: "Oferta",
+                rating: 4.7,
+                reviews: 1200,
+                isNew: false,
+                onSale: true
+            },
+            {
+                id: 12,
+                name: "Vinilo DIMENSION: DILEMMA",
+                price: 45.00,
+                originalPrice: null,
+                category: "special",
+                description: "Edición limitada en vinilo de color, masterizada especialmente para audiófilos.",
+                emoji: "🎵",
+                badge: "Vinilo",
+                rating: 4.9,
+                reviews: 650,
+                isNew: true,
+                onSale: false
+            },
+            {
+                id: 13,
+                name: "Sudadera Zip ENHYPEN",
+                price: 70.00,
+                originalPrice: null,
+                category: "clothing",
+                description: "Sudadera con cremallera completa, capucha ajustable y bolsillos con cremallera.",
+                emoji: "🧥",
+                badge: "Premium",
+                rating: 4.6,
+                reviews: 890,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 14,
+                name: "Pulsera de Silicona Set",
+                price: 12.00,
+                originalPrice: null,
+                category: "accessories",
+                description: "Set de 3 pulseras de silicona con diferentes frases icónicas del grupo.",
+                emoji: "💫",
+                badge: "Económico",
+                rating: 4.2,
+                reviews: 340,
+                isNew: false,
+                onSale: false
+            },
+            {
+                id: 15,
+                name: "Box Set Coleccionista",
+                price: 199.99,
+                originalPrice: null,
+                category: "special",
+                description: "Box premium con todos los álbumes, merchandising exclusivo y artbook de lujo.",
+                emoji: "📦",
+                badge: "Coleccionista",
+                rating: 5.0,
+                reviews: 180,
+                isNew: true,
+                onSale: false
+            }
+        ];
+
+        const itemSizes = {
+            'albums': { width: 2, height: 2 },
+            'clothing': { width: 2, height: 3 },
+            'accessories': { width: 1, height: 1 },
+            'collectibles': { width: 1, height: 2 },
+            'special': { width: 3, height: 2 }
+        };
+
+        // FUNCIÓN CORREGIDA: Verificar autenticación usando localStorage
+        function checkAuthStatus() {
+            const savedToken = localStorage.getItem('enhypen_token');
+            const savedUser = localStorage.getItem('enhypen_user');
+            
+            if (savedToken && savedUser) {
+                try {
+                    authToken = savedToken;
+                    currentUser = JSON.parse(savedUser);
+                    
+                    // Actualizar UI
+                    document.getElementById('userGreeting').textContent = `👋 Hola, ${currentUser.name}`;
+                    document.getElementById('userGreeting').style.display = 'inline';
+                    document.getElementById('loginLink').textContent = 'Mi Cuenta';
+                    document.getElementById('loginLink').href = 'index.html';
+                    
+                    console.log('✅ Usuario autenticado:', currentUser.name);
+                    showNotification(`¡Bienvenido de nuevo, ${currentUser.name}! 🎉`, 'success');
+                } catch (error) {
+                    console.error('Error al parsear datos del usuario:', error);
+                    localStorage.removeItem('enhypen_token');
+                    localStorage.removeItem('enhypen_user');
+                }
+            } else {
+                console.log('❌ No hay sesión activa');
+                document.getElementById('userGreeting').style.display = 'none';
+                document.getElementById('loginLink').textContent = 'Iniciar Sesión';
+                document.getElementById('loginLink').href = 'index.html';
+            }
+        }
+
+        function initStore() {
+            products = [...productData];
+            filteredProducts = [...products];
+            displayProducts(filteredProducts);
+            updateProductsCount();
+            updateCartUI();
+            initInventoryGrid();
+            checkAuthStatus();
+        }
+
+        function initInventoryGrid() {
+            const grid = document.getElementById('inventoryGrid');
+            grid.innerHTML = '';
+            
+            for (let row = 0; row < 6; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const slot = document.createElement('div');
+                    slot.classList.add('inventory-slot');
+                    slot.dataset.row = row;
+                    slot.dataset.col = col;
+                    
+                    slot.addEventListener('dragover', handleDragOver);
+                    slot.addEventListener('drop', handleDrop);
+                    slot.addEventListener('dragleave', handleDragLeave);
+                    
+                    grid.appendChild(slot);
+                }
+            }
+        }
+
+        function displayProducts(productsToShow) {
+            const grid = document.getElementById('productsGrid');
+            
+            if (productsToShow.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+                        <div style="font-size: 3rem; margin-bottom: 20px; opacity: 0.3;">🔍</div>
+                        <h3>No se encontraron productos</h3>
+                        <p style="opacity: 0.6; margin-top: 10px;">Intenta con otros términos de búsqueda o filtros</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = productsToShow.map(product => `
+                <div class="product-card ${currentView === 'list' ? 'list-view' : ''} fade-in" data-category="${product.category}">
+                    <div class="product-image">
+                        ${product.emoji}
+                        ${product.badge ? `<div class="product-badge ${product.isNew ? 'new' : product.onSale ? 'sale' : ''}">${product.badge}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${getCategoryName(product.category)}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">
+                            $${product.price}
+                            ${product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : ''}
+                        </div>
+                        <div class="product-rating">
+                            <div class="stars">${getStars(product.rating)}</div>
+                            <div class="rating-text">(${product.reviews} reviews)</div>
+                        </div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                                <span>Añadir al Carrito</span>
+                            </button>
+                            <button class="wishlist-btn ${wishlist.includes(product.id) ? 'active' : ''}" 
+                                    onclick="toggleWishlist(${product.id})">
+                                ${wishlist.includes(product.id) ? '❤️' : '🤍'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'albums': 'Álbumes',
+                'clothing': 'Ropa',
+                'accessories': 'Accesorios',
+                'collectibles': 'Coleccionables',
+                'special': 'Edición Especial'
+            };
+            return names[category] || category;
+        }
+
+        function getStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '★'.repeat(fullStars);
+            if (hasHalfStar) stars += '☆';
+            stars += '☆'.repeat(5 - Math.ceil(rating));
+            return stars;
+        }
+
+        function filterProducts(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            if (category === 'all') {
+                filteredProducts = [...products];
+            } else {
+                filteredProducts = products.filter(product => product.category === category);
+            }
+
+            displayProducts(filteredProducts);
+            updateProductsCount();
+        }
+
+        function searchProducts(query) {
+            const searchTerm = query.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                filteredProducts = [...products];
+            } else {
+                filteredProducts = products.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm) ||
+                    getCategoryName(product.category).toLowerCase().includes(searchTerm)
+                );
+            }
+
+            displayProducts(filteredProducts);
+            updateProductsCount();
+        }
+
+        function sortProducts(sortBy) {
+            let sorted = [...filteredProducts];
+
+            switch (sortBy) {
+                case 'price-low':
+                    sorted.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sorted.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name':
+                    sorted.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'newest':
+                    sorted.sort((a, b) => b.isNew - a.isNew);
+                    break;
+                case 'popular':
+                    sorted.sort((a, b) => b.reviews - a.reviews);
+                    break;
+                default:
+                    break;
+            }
+
+            filteredProducts = sorted;
+            displayProducts(filteredProducts);
+        }
+
+        function toggleView(view) {
+            currentView = view;
+            
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const grid = document.getElementById('productsGrid');
+            if (view === 'list') {
+                grid.classList.add('list-view');
+            } else {
+                grid.classList.remove('list-view');
+            }
+
+            displayProducts(filteredProducts);
+        }
+
+        function updateProductsCount() {
+            const count = filteredProducts.length;
+            const countElement = document.getElementById('productsCount');
+            countElement.textContent = `Mostrando ${count} producto${count !== 1 ? 's' : ''}`;
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product, 
+                    quantity: 1,
+                    gridPosition: null, 
+                    isFloating: true 
+                });
+            }
+
+            updateCartUI();
+            showAddToCartAnimation();
+            showNotification(`${product.name} añadido al carrito! 🛒`, 'success');
+        }
+
+        function removeFromCart(productId) {
+            const product = cart.find(item => item.id === productId);
+            cart = cart.filter(item => item.id !== productId);
+            
+            for (let row = 0; row < 6; row++) {
+                for (let col = 0; col < 8; col++) {
+                    if (inventoryGrid[col][row] === productId) {
+                        inventoryGrid[col][row] = null;
+                    }
+                }
+            }
+            
+            updateCartUI();
+            
+            if (product) {
+                showNotification(`${product.name} eliminado del carrito`, 'info');
+            }
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (!item) return;
+
+            item.quantity += change;
+            
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const inventoryGrid = document.getElementById('inventoryGrid');
+            const floatingItems = document.getElementById('floatingItems');
+            const floatingContainer = document.getElementById('floatingItemsContainer');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            renderInventory();
+            updateCartSummary();
+        }
+
+        function renderInventory() {
+            const inventoryGrid = document.getElementById('inventoryGrid');
+            const floatingItems = document.getElementById('floatingItems');
+            const floatingContainer = document.getElementById('floatingItemsContainer');
+            
+            if (cart.length === 0) {
+                inventoryGrid.innerHTML = `
+                    <div class="empty-inventory">
+                        <div class="empty-inventory-icon">🎒</div>
+                        <p>Arrastra productos aquí</p>
+                        <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 5px;">
+                            Organiza tu inventario como en RE4
+                        </p>
+                    </div>
+                `;
+                floatingItems.style.display = 'none';
+                return;
+            }
+
+            inventoryGrid.innerHTML = '';
+            initInventoryGrid();
+
+            const placedItems = cart.filter(item => item.gridPosition);
+            const floatingItemsList = cart.filter(item => item.isFloating || !item.gridPosition);
+
+            placedItems.forEach(item => {
+                if (item.gridPosition) {
+                    renderItemInGrid(item, item.gridPosition.col, item.gridPosition.row);
+                }
+            });
+
+            if (floatingItemsList.length > 0) {
+                floatingItems.style.display = 'block';
+                floatingContainer.innerHTML = floatingItemsList.map(item => 
+                    createFloatingItemHTML(item)
+                ).join('');
+                
+                floatingContainer.querySelectorAll('.floating-item').forEach(itemElement => {
+                    makeItemDraggable(itemElement);
+                });
+            } else {
+                floatingItems.style.display = 'none';
+            }
+        }
+
+        function renderItemInGrid(item, startCol, startRow) {
+            const size = itemSizes[item.category];
+            const itemElement = document.createElement('div');
+            
+            itemElement.classList.add('inventory-item', item.category);
+            itemElement.draggable = true;
+            itemElement.dataset.itemId = item.id;
+            itemElement.innerHTML = `
+                ${item.emoji}
+                <button class="remove-btn" onclick="removeFromCart(${item.id})">×</button>
+            `;
+            
+            const gridWidth = 100 / 8;
+            const gridHeight = 100 / 6;
+            
+            itemElement.style.left = `${startCol * gridWidth}%`;
+            itemElement.style.top = `${startRow * gridHeight}%`;
+            itemElement.style.width = `${size.width * gridWidth}%`;
+            itemElement.style.height = `${size.height * gridHeight}%`;
+            
+            makeItemDraggable(itemElement);
+            document.getElementById('inventoryGrid').appendChild(itemElement);
+            
+            for (let col = startCol; col < startCol + size.width; col++) {
+                for (let row = startRow; row < startRow + size.height; row++) {
+                    if (col < 8 && row < 6) {
+                        inventoryGrid[col][row] = item.id;
+                    }
+                }
+            }
+        }
+
+        function createFloatingItemHTML(item) {
+            return `
+                <div class="floating-item ${item.category}" 
+                     draggable="true" 
+                     data-item-id="${item.id}">
+                    ${item.emoji}
+                    <button class="remove-btn" onclick="removeFromCart(${item.id})" 
+                            style="display: none;">×</button>
+                </div>
+            `;
+        }
+
+        function makeItemDraggable(element) {
+            element.addEventListener('dragstart', handleDragStart);
+            element.addEventListener('dragend', handleDragEnd);
+            
+            element.addEventListener('mouseenter', () => {
+                const removeBtn = element.querySelector('.remove-btn');
+                if (removeBtn) removeBtn.style.display = 'flex';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                const removeBtn = element.querySelector('.remove-btn');
+                if (removeBtn) removeBtn.style.display = 'none';
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedItem = {
+                id: parseInt(e.target.dataset.itemId),
+                element: e.target,
+                isFromFloating: e.target.classList.contains('floating-item')
+            };
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            draggedItem = null;
+            
+            document.querySelectorAll('.inventory-slot').forEach(slot => {
+                slot.classList.remove('valid-drop', 'invalid-drop');
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            
+            if (!draggedItem) return;
+            
+            const slot = e.currentTarget;
+            const col = parseInt(slot.dataset.col);
+            const row = parseInt(slot.dataset.row);
+            const item = cart.find(item => item.id === draggedItem.id);
+            const size = itemSizes[item.category];
+            
+            const canFit = canItemFitAt(item.id, col, row, size);
+            
+            document.querySelectorAll('.inventory-slot').forEach(s => {
+                s.classList.remove('valid-drop', 'invalid-drop');
+            });
+            
+            for (let c = col; c < col + size.width; c++) {
+                for (let r = row; r < row + size.height; r++) {
+                    if (c < 8 && r < 6) {
+                        const targetSlot = document.querySelector(`[data-row="${r}"][data-col="${c}"]`);
+                        if (targetSlot) {
+                            targetSlot.classList.add(canFit ? 'valid-drop' : 'invalid-drop');
+                        }
+                    }
+                }
+            }
+        }
+
+        function handleDragLeave(e) {
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+                e.currentTarget.classList.remove('valid-drop', 'invalid-drop');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            
+            if (!draggedItem) return;
+            
+            const slot = e.currentTarget;
+            const col = parseInt(slot.dataset.col);
+            const row = parseInt(slot.dataset.row);
+            const item = cart.find(item => item.id === draggedItem.id);
+            const size = itemSizes[item.category];
+            
+            if (canItemFitAt(item.id, col, row, size)) {
+                if (item.gridPosition && !draggedItem.isFromFloating) {
+                    clearItemFromGrid(item.id);
+                }
+                
+                item.gridPosition = { col, row };
+                item.isFloating = false;
+                
+                for (let c = col; c < col + size.width; c++) {
+                    for (let r = row; r < row + size.height; r++) {
+                        if (c < 8 && r < 6) {
+                            inventoryGrid[c][r] = item.id;
+                        }
+                    }
+                }
+                
+                updateCartUI();
+                showNotification(`${item.name} colocado en el inventario! 📦`, 'success');
+            } else {
+                showNotification(`No hay espacio suficiente para ${item.name}`, 'error');
+            }
+            
+            document.querySelectorAll('.inventory-slot').forEach(s => {
+                s.classList.remove('valid-drop', 'invalid-drop');
+            });
+        }
+
+        function canItemFitAt(itemId, col, row, size) {
+            if (col + size.width > 8 || row + size.height > 6) {
+                return false;
+            }
+            
+            for (let c = col; c < col + size.width; c++) {
+                for (let r = row; r < row + size.height; r++) {
+                    if (inventoryGrid[c][r] !== null && inventoryGrid[c][r] !== itemId) {
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+
+        function clearItemFromGrid(itemId) {
+            for (let col = 0; col < 8; col++) {
+                for (let row = 0; row < 6; row++) {
+                    if (inventoryGrid[col][row] === itemId) {
+                        inventoryGrid[col][row] = null;
+                    }
+                }
+            }
+        }
+
+        function updateCartSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 50 ? 0 : 9.99;
+            const taxes = subtotal * 0.08; 
+            const total = subtotal + shipping + taxes;
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            document.getElementById('itemCount').textContent = itemCount;
+            document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)}`;
+            document.getElementById('shipping').textContent = shipping === 0 ? 'Gratis' : `${shipping.toFixed(2)}`;
+            document.getElementById('taxes').textContent = `${taxes.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `${total.toFixed(2)}`;
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            
+            isCartOpen = !isCartOpen;
+            
+            if (isCartOpen) {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function showAddToCartAnimation() {
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.transform = 'scale(1.3) rotate(5deg)';
+            cartIcon.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
+            
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1) rotate(0deg)';
+                cartIcon.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+            }, 300);
+        }
+
+        function toggleWishlist(productId) {
+            const index = wishlist.indexOf(productId);
+            const product = products.find(p => p.id === productId);
+            
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showNotification(`${product.name} eliminado de favoritos`, 'info');
+            } else {
+                wishlist.push(productId);
+                showNotification(`${product.name} añadido a favoritos! ❤️`, 'success');
+            }
+            
+            if (filteredProducts.length > 0) {
+                displayProducts(filteredProducts);
+            }
+        }
+
+        async function checkout() {
+            if (cart.length === 0) {
+                showNotification('Tu carrito está vacío 🛒', 'error');
+                return;
+            }
+
+            if (!authToken || !currentUser) {
+                showNotification('⚠️ Debes iniciar sesión para comprar', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 50 ? 0 : 9.99;
+            const taxes = subtotal * 0.08;
+            const total = subtotal + shipping + taxes;
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            const purchaseItems = cart.map(item => ({
+                productId: item.id,
+                quantity: item.quantity
+            }));
+
+            showNotification('💳 Procesando pago...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/purchase`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ items: purchaseItems })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showNotification(`🎉 ¡Compra exitosa!\nTotal: ${data.purchase.totalAmount.toFixed(2)}\nProductos: ${itemCount}\n¡Gracias por tu compra!`, 'success');
+                    
+                    cart = [];
+                    inventoryGrid = Array(8).fill().map(() => Array(6).fill(null));
+                    updateCartUI();
+                    
+                    setTimeout(() => {
+                        toggleCart();
+                        showNotification('✅ Tu compra ha sido guardada en tu historial', 'success');
+                    }, 2000);
+                } else {
+                    showNotification(`❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error al procesar la compra:', error);
+                showNotification('❌ Error de conexión con el servidor. Verifica que esté ejecutándose.', 'error');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? 'linear-gradient(45deg, #4ecdc4, #45b7d1)' : 
+                             type === 'error' ? 'linear-gradient(45deg, #ff6b6b, #ff8e8e)' : 
+                             'linear-gradient(45deg, #666, #888)'};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                z-index: 3000;
+                font-weight: bold;
+                white-space: pre-line;
+                animation: slideInRight 0.3s ease-out;
+                backdrop-filter: blur(10px);
+                max-width: 350px;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-in forwards';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        function goHome() {
+            document.querySelector('.filter-btn[data-category="all"]').click();
+            document.getElementById('searchInput').value = '';
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initStore();
+            
+            setTimeout(() => {
+                const loadingElement = document.querySelector('.loading');
+                if (loadingElement) {
+                    loadingElement.remove();
+                }
+            }, 500);
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isCartOpen) {
+                toggleCart();
+            }
+            
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+        });
+
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+                header.style.backdropFilter = 'blur(25px)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+                header.style.backdropFilter = 'blur(20px)';
+            }
+        });
+    </script>
+</body>
+</html>

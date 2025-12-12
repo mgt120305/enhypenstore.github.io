@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENHYPEN - Official Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #4ecdc4;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: url('intro.jpg');
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(
+            to bottom,
+            rgba(10, 34, 63, 0.95) 0%,      /* Azul muy oscuro arriba */
+            rgba(7, 28, 54, 0.7) 40%,      /* Degradado fuerte solo en el borde superior */
+            rgba(15, 52, 96, 0.0) 100%       /* Transparente hacia el centro y abajo */
+        ),
+        rgba(0, 0, 0, 0.3);
+    z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(78, 205, 196, 0.8)); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .about {
+            padding: 120px 50px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            align-items: center;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .intro-text h3 {
+            color: #4ecdc4;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .media-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .media-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        .sponsors {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .sponsors h3 {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sponsor-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .sponsor-logo {
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .sponsor-logo:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .newsletter {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 80px 50px;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .newsletter-btn {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            padding: 60px 50px 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .intro-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .media-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <nav>
+            <div class="logo">ENHYPEN</div>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="shop2.1.html">SHOP</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>About ENHYPEN</h1>
+            <p>Connect, Discover, Create</p>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">NUESTRA INTRODUCCIÓN</h2>
+            
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h3>ENHYPEN</h3>
+                    <p>ENHYPEN es un grupo de K-pop surcoreano formado por BELIFT 
+                        LAB. El grupo consiste en siete miembros: Heeseung, Jay, 
+                        Jake, Sunghoon, Sunoo, Jungwon y Ni-ki. Debutaron el 30 de
+                         noviembre de 2020 con el extended play "BORDER: DAY ONE".</p>
+                </div>
+                <div class="intro-text">
+                    <p>Su nombre significa "conexión, descubrimiento y crecimiento"
+                         representando cómo los siete miembros se conectaron entre 
+                         sí para descubrir y crecer juntos. ENHYPEN combina la palabra
+                          "EN" que significa conexión y "HYPHEN" que simboliza que son
+                           diferentes pero se conectan para crear una historia juntos.</p>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">50M+</div>
+                    <div class="stat-label">Reproducciones</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Videos Musicales</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Presentaciones</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15M+</div>
+                    <div class="stat-label">Seguidores</div>
+                </div>
+            </div>
+            <div class="media-section">
+                <a href="https://youtu.be/xdX_8R8Unik">
+                    <div class="media-item">
+                        <div class="play-button">▶</div>
+                    </div>
+                </a>
+                <a href="https://es.pinterest.com/search/pins/?q=enhypen&rs=rs&source_id=rs_K2n4aq3t&eq=enh&etslf=34816">
+                    <div class="media-item" onclick="viewGallery()">
+                        <div style="color: white; font-size: 1.5rem; font-weight: bold;">GALERÍA</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sponsors">
+                <h3>NUESTROS PATROCINADORES</h3>
+                <div class="sponsor-logos">
+                    <div class="sponsor-logo">HYBE</div>
+                    <div class="sponsor-logo">BELIFT LAB</div>
+                    <div class="sponsor-logo">Weverse</div>
+                    <div class="sponsor-logo">Spotify</div>
+                    <div class="sponsor-logo">YouTube Music</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <h2>¡SUSCRÍBETE AL NEWSLETTER!</h2>
+            <p>Mantente actualizado con las últimas noticias, lanzamientos y contenido exclusivo de ENHYPEN</p>
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Tu correo electrónico">
+                <button class="newsletter-btn" onclick="subscribe()">SUSCRIBIRSE</button>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-logo">ENHYPEN</div>
+            <div class="social-links">
+                <a href="https://www.facebook.com/officialENHYPEN?locale=es_LA" class="social-link">f</a>
+                <a href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbjRPOXZHSkdtU0NCckhVR2loRmJ2SWE5a3hJZ3xBQ3Jtc0tsem5fX3RyLXRWTjhud3M5MklmeGpiWnJLWXdRVkx1X21OU3FaOWl6T3p1VGt2Nlg4aEM2TlZZanFNUGVmOV9aV1Nuc0NYTzhtUE1lM1czZ3cyVXF0endCZ05TeWh2WGlLRHh4MEpKN1kzUFQ1clZXaw&q=https%3A%2F%2Fwww.tiktok.com%2F%40enhypen" class="social-link">t</a>
+                <a href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbmVhR1ZTYmF3eFZmZERHZ1BRX2JNYkhJX0Jxd3xBQ3Jtc0ttUTEzaW1TNXJuSGFzY0ZLYmdxUkZRRFhoZEM3M2Fxelg1WFI1cHVnZXRyQzBZaVRiT3JzQ0d2dUZSV2tod3NCcFU2RXVBWU83N1lib3FvelI3X3M2TWlBRXE5dnNRWTBTM3pLTU52R0dYM1ZQdTRxQQ&q=https%3A%2F%2Fwww.instagram.com%2Fenhypen%2F" class="social-link">i</a>
+                <a href="https://www.youtube.com/channel/UCArLZtok93cO5R9RI4_Y5Jw" class="social-link">y</a>
+                <a href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbTFaWnZNU0YwSTRfN0ZucjVleGhFdFUwdHI2UXxBQ3Jtc0tuNllzTll5bE56Y3dHY1VzYVlUTV9pdjNRczlKM0sxUGdLeHFLbzBLamR2OU5BODBHSUlhYl9zUnhueW1tN0x6N3F2X2JWMktjUkFRZUlOekp1Q0ZaQ3ZRamZENERvai14UVE1aGdjVTBQYVB4QzlVRQ&q=https%3A%2F%2Ftwitter.com%2FENHYPEN" class="social-link">x</a>
+            </div>
+            <div class="copyright">
+                Copyright © 2024 ENHYPEN. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numberOfParticles = 50;
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.3)';
+            }
+        });
+
+        function playVideo() {
+            alert('¡Reproduciendo video musical de ENHYPEN! 🎵');
+        }
+
+        function viewGallery() {
+            alert('¡Abriendo galería de fotos de ENHYPEN! 📸');
+        }
+
+        function subscribe() {
+            const email = document.querySelector('.newsletter-input').value;
+            if (email) {
+                alert('¡Gracias por suscribirte! Te mantendremos informado sobre ENHYPEN 💌');
+                document.querySelector('.newsletter-input').value = '';
+            } else {
+                alert('Por favor, ingresa tu correo electrónico 📧');
+            }
+        }
+
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const target = parseInt(stat.textContent);
+                let count = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    count += increment;
+                    if (count >= target) {
+                        count = target;
+                        clearInterval(timer);
+                    }
+                    stat.textContent = Math.floor(count) + stat.textContent.replace(/[0-9]/g, '').slice(-1);
+                }, 50);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            observer.observe(document.querySelector('.stats'));
+        });
+    </script>
+</body>
+</html>

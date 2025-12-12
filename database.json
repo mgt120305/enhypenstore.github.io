@@ -1,0 +1,336 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "jhoel burgoa",
+      "email": "jhoel@gmail.com",
+      "password": "$2b$10$9MIPe.w7P/ApH6dhhOFu..KV415kgCvaOnoFAuLClhA703tcfNSCW",
+      "registeredAt": "2025-10-17T21:06:45.479Z",
+      "totalSpent": 358.97,
+      "totalPurchases": 1
+    },
+    {
+      "id": 2,
+      "name": "Alejito",
+      "email": "alegito@gmail.com",
+      "password": "$2b$10$IMZq.83poAprzobe3GBpxujHWE3cT2g4qDuSzS4adgVDpxSwVQALW",
+      "registeredAt": "2025-10-19T19:11:34.640Z",
+      "totalSpent": 0,
+      "totalPurchases": 0
+    },
+    {
+      "id": 3,
+      "name": "Alejandro",
+      "email": "alejito@gmail.com",
+      "password": "$2b$10$YB34m5fHPxhpM.0UpO7lZOCEIfMm7FRxAjUNDclcBzz9.eACxA2Sa",
+      "registeredAt": "2025-10-19T19:20:15.243Z",
+      "totalSpent": 248.92,
+      "totalPurchases": 1
+    },
+    {
+      "id": 4,
+      "name": "Paquito",
+      "email": "Unifranz@gmail.com",
+      "password": "$2b$10$n4KOR7LcF.1pbY/jjkMe5eKiValkDrRLchc0XPcwj.7vhy/A8MuWa",
+      "registeredAt": "2025-10-20T02:41:09.941Z",
+      "totalSpent": 403.96,
+      "totalPurchases": 1
+    },
+    {
+      "id": 5,
+      "name": "Ari",
+      "email": "Ari@gmail.com",
+      "password": "$2b$10$d1j/srYq5/Us68gyKxsg6.9FgXn0VrS8mAUZB7WeYTHVxlEUMS1zC",
+      "registeredAt": "2025-10-20T02:53:48.311Z",
+      "totalSpent": 248.95999999999998,
+      "totalPurchases": 1
+    }
+  ],
+  "purchases": [
+    {
+      "id": 1,
+      "userId": 1,
+      "items": [
+        {
+          "productId": 2,
+          "productName": "Hoodie Oficial ENHYPEN",
+          "price": 55,
+          "quantity": 3,
+          "emoji": "👕",
+          "subtotal": 165
+        },
+        {
+          "productId": 5,
+          "productName": "Camiseta Tour 2024",
+          "price": 35,
+          "quantity": 1,
+          "emoji": "👔",
+          "subtotal": 35
+        },
+        {
+          "productId": 6,
+          "productName": "Llavero Set Miembros",
+          "price": 18,
+          "quantity": 1,
+          "emoji": "🔑",
+          "subtotal": 18
+        },
+        {
+          "productId": 4,
+          "productName": "MANIFESTO: DAY 1 Album",
+          "price": 24.99,
+          "quantity": 3,
+          "emoji": "💿",
+          "subtotal": 74.97
+        },
+        {
+          "productId": 7,
+          "productName": "Photocard Set Limitada",
+          "price": 22,
+          "quantity": 3,
+          "emoji": "📸",
+          "subtotal": 66
+        }
+      ],
+      "totalAmount": 358.97,
+      "purchaseDate": "2025-10-19T19:08:34.181Z",
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "items": [
+        {
+          "productId": 1,
+          "productName": "DIMENSION: DILEMMA Album",
+          "price": 25.99,
+          "quantity": 4,
+          "emoji": "💿",
+          "subtotal": 103.96
+        },
+        {
+          "productId": 4,
+          "productName": "MANIFESTO: DAY 1 Album",
+          "price": 24.99,
+          "quantity": 4,
+          "emoji": "💿",
+          "subtotal": 99.96
+        },
+        {
+          "productId": 8,
+          "productName": "Poster Oficial A2",
+          "price": 15,
+          "quantity": 3,
+          "emoji": "🖼️",
+          "subtotal": 45
+        }
+      ],
+      "totalAmount": 248.92,
+      "purchaseDate": "2025-10-19T19:21:16.430Z",
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "userId": 4,
+      "items": [
+        {
+          "productId": 1,
+          "productName": "DIMENSION: DILEMMA Album",
+          "price": 25.99,
+          "quantity": 4,
+          "emoji": "💿",
+          "subtotal": 103.96
+        },
+        {
+          "productId": 2,
+          "productName": "Hoodie Oficial ENHYPEN",
+          "price": 55,
+          "quantity": 3,
+          "emoji": "👕",
+          "subtotal": 165
+        },
+        {
+          "productId": 3,
+          "productName": "Lightstick ENHYPEN Official",
+          "price": 45,
+          "quantity": 3,
+          "emoji": "✨",
+          "subtotal": 135
+        }
+      ],
+      "totalAmount": 403.96,
+      "purchaseDate": "2025-10-20T02:42:09.420Z",
+      "status": "completed"
+    },
+    {
+      "id": 4,
+      "userId": 5,
+      "items": [
+        {
+          "productId": 5,
+          "productName": "Camiseta Tour 2024",
+          "price": 35,
+          "quantity": 3,
+          "emoji": "👔",
+          "subtotal": 105
+        },
+        {
+          "productId": 4,
+          "productName": "MANIFESTO: DAY 1 Album",
+          "price": 24.99,
+          "quantity": 4,
+          "emoji": "💿",
+          "subtotal": 99.96
+        },
+        {
+          "productId": 7,
+          "productName": "Photocard Set Limitada",
+          "price": 22,
+          "quantity": 2,
+          "emoji": "📸",
+          "subtotal": 44
+        }
+      ],
+      "totalAmount": 248.95999999999998,
+      "purchaseDate": "2025-10-20T02:54:21.978Z",
+      "status": "completed"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "DIMENSION: DILEMMA Album",
+      "price": 25.99,
+      "category": "albums",
+      "emoji": "💿",
+      "description": "Álbum completo con photobook exclusivo",
+      "stock": 92
+    },
+    {
+      "id": 2,
+      "name": "Hoodie Oficial ENHYPEN",
+      "price": 55,
+      "category": "clothing",
+      "emoji": "👕",
+      "description": "Sudadera oficial con capucha",
+      "stock": 44
+    },
+    {
+      "id": 3,
+      "name": "Lightstick ENHYPEN Official",
+      "price": 45,
+      "category": "accessories",
+      "emoji": "✨",
+      "description": "Lightstick oficial para conciertos",
+      "stock": 72
+    },
+    {
+      "id": 4,
+      "name": "MANIFESTO: DAY 1 Album",
+      "price": 24.99,
+      "category": "albums",
+      "emoji": "💿",
+      "description": "Último lanzamiento con contenido especial",
+      "stock": 69
+    },
+    {
+      "id": 5,
+      "name": "Camiseta Tour 2024",
+      "price": 35,
+      "category": "clothing",
+      "emoji": "👔",
+      "description": "Camiseta conmemorativa del tour mundial 2024",
+      "stock": 56
+    },
+    {
+      "id": 6,
+      "name": "Llavero Set Miembros",
+      "price": 18,
+      "category": "accessories",
+      "emoji": "🔑",
+      "description": "Set completo de 7 llaveros acrílicos",
+      "stock": 119
+    },
+    {
+      "id": 7,
+      "name": "Photocard Set Limitada",
+      "price": 22,
+      "category": "collectibles",
+      "emoji": "📸",
+      "description": "Colección limitada de 50 photocards holográficas",
+      "stock": 35
+    },
+    {
+      "id": 8,
+      "name": "Poster Oficial A2",
+      "price": 15,
+      "category": "collectibles",
+      "emoji": "🖼️",
+      "description": "Poster de alta calidad tamaño A2",
+      "stock": 87
+    },
+    {
+      "id": 9,
+      "name": "Gorra ENHYPEN Logo",
+      "price": 28,
+      "category": "accessories",
+      "emoji": "🧢",
+      "description": "Gorra ajustable con logo bordado 3D",
+      "stock": 70
+    },
+    {
+      "id": 10,
+      "name": "BORDER: CARNIVAL Album",
+      "price": 23.99,
+      "category": "albums",
+      "emoji": "💿",
+      "description": "Álbum debut histórico con packaging especial",
+      "stock": 95
+    },
+    {
+      "id": 11,
+      "name": "Mochila Tour Oficial",
+      "price": 65,
+      "category": "accessories",
+      "emoji": "🎒",
+      "description": "Mochila resistente al agua con compartimentos acolchados",
+      "stock": 35
+    },
+    {
+      "id": 12,
+      "name": "Vinilo DIMENSION: DILEMMA",
+      "price": 45,
+      "category": "special",
+      "emoji": "🎵",
+      "description": "Edición limitada en vinilo de color",
+      "stock": 25
+    },
+    {
+      "id": 13,
+      "name": "Sudadera Zip ENHYPEN",
+      "price": 70,
+      "category": "clothing",
+      "emoji": "🧥",
+      "description": "Sudadera con cremallera completa y capucha ajustable",
+      "stock": 45
+    },
+    {
+      "id": 14,
+      "name": "Pulsera de Silicona Set",
+      "price": 12,
+      "category": "accessories",
+      "emoji": "💫",
+      "description": "Set de 3 pulseras de silicona con frases icónicas",
+      "stock": 150
+    },
+    {
+      "id": 15,
+      "name": "Box Set Coleccionista",
+      "price": 199.99,
+      "category": "special",
+      "emoji": "📦",
+      "description": "Box premium con todos los álbumes y artbook de lujo",
+      "stock": 15
+    }
+  ]
+}
